@@ -12,13 +12,15 @@ foreach($temp_array as $temp)
  echo "Average Temperature is : ".$avg_high_temp."
 "; 
 sort($temp_array);
-echo " List of five lowest temperatures :";
-for ($i=0; $i< 5; $i++)
+echo " List of seven lowest temperatures :";
+for ($i=0; $i< 7; $i++)
 { 
 echo $temp_array[$i].", ";
 }
-echo "List of five highest temperatures :";
-for ($i=($temp_array_length-5); $i< ($temp_array_length); $i++)
+arsort($temp_array);
+echo "\n";
+echo "\n List of seven highest temperatures :";
+for ($i=($temp_array_length-7); $i< ($temp_array_length); $i++)
 {
 echo $temp_array[$i].", ";
 }
