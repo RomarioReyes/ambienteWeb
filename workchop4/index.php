@@ -1,7 +1,7 @@
 <?php
   
   session_start();
-  session_destroy();
+
   if ($_SESSION && $_SESSION['user']){
     //user already logged in
     header('Location: inicio.php');

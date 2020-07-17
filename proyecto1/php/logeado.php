@@ -1,23 +1,23 @@
 <?php
-  
-  session_start();
 
-  if ($_SESSION && $_SESSION['user']){
-    //user already logged in
-    header('Location: php/logeado.php');
-  }
+session_start();
 
-  $message = "";
-  if(!empty($_REQUEST['status'])) {
-    switch($_REQUEST['status']) {
-      case 'login':
-        $message = 'User does not exists';
-      break;
-      case 'error':
-        $message = 'There was a problem inserting the user';
-      break;
-    }
-  }
+$user = $_SESSION['user'];
+if (!$user) {
+    header('Location: index.php');
+}
+$message = "";
+if (!empty($_REQUEST['status'])) {
+    $message = $_REQUEST['message'];
+    // switch($_REQUEST['status']) {
+    //   case 'success':
+    //     $message = 'User was added succesfully';
+    //   break;
+    //   case 'error':
+    //     $message = 'There was a problem inserting the user';
+    //   break;
+    // }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +25,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
     <title>Principal</title>
 </head>
 
@@ -34,23 +34,27 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Bienvenido</a>
+            <a class="navbar-brand" href="#">Bienvenido <?php echo $user["nombre"];
+                                                        echo " " . $user["apellidos"] ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
-                            <span class="sr-only">(current)</span>
+                        <a class="nav-link" href="#">Estadisticas<span class="sr-only">(current)</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="php/usu-registro.php">Registrarse <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="#">Categorias <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">loguearse <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="php/login.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
 
 
@@ -103,7 +107,7 @@
                         <h4>$24.99</h4>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
                         <button class="btn btn-primary"> Agregar </button>
-                        
+
                     </div>
                 </div>
                 <!-- /.card -->
@@ -129,8 +133,8 @@
 
     <!----jumbotrom----->
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.dropdown-toggle').dropdown();

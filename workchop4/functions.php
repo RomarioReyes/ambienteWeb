@@ -3,7 +3,7 @@
 
 function getConnection() {
   $connection = pg_connect("host='localhost' dbname=categorias port=5432 user=postgres password=roma5698")or die ("Error de Conexion".pg_last_error());
-  pg_query($conectar, $sql);
+  
   return $connection;
 }
 
@@ -14,7 +14,7 @@ function saveClient($name, $ape, $ced, $contra) {
     $sql = "INSERT INTO usuarios(tipo, nombre, apellidos, cedula, contrasena) VALUES (2, '$name', '$ape', '$ced', '$contra')";
 
        $rs= pg_query($conn, $sql);
-        pg_close($conectar);
+        pg_close($conn);
       return $rs;
 }
 
