@@ -46,10 +46,35 @@ if (!empty($_REQUEST['status'])) {
                         <a class="nav-link" href="#">Estadisticas<span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <?php if ($user["tipo"] == 1) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="validaCategorias.php?id=1">Categorias<span class="bi bi-chevron-compact-up"></span></a>
+                        </li>
+                    <?php } else { ?>
+                        <li class="nav-item">
+                            <div class="col-lg-3">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Categorias <span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
+                                <div class="navbar">
+                                    <div class="navbar-inner">
+                                        <div class="container">
+                                            <ul class="nav">
+                                                <li class="dropdown" id="accountmenu">
+                                                    <a class="dropdown-toggle text-muted" data-toggle="dropdown" href="#">Categorias</a>
+                                                    <ul class="dropdown-menu">
+
+                                                        <li><a href="#">Casa</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Mascotas</a></li>
+                                                        <li><a href="#">Dulces</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="php/login.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
@@ -65,40 +90,9 @@ if (!empty($_REQUEST['status'])) {
 
     <!-- Page Content -->
     <div class="container">
-
+        <H1 class="text-center text-primary">EShop</H1>
         <div class="row">
-
-            <div class="col-lg-3">
-                <h1 class="my-4 text-primary">EShop</h1>
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <ul class="nav">
-                                <li class="dropdown" id="accountmenu">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown" id="accountmenu">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Electricos</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Robot</a></li>
-                                                <li><a href="#">Carro</a></li>
-                                                <li><a href="#">Cafetera</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Casa</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Mascotas</a></li>
-                                        <li><a href="#">Dulces</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-lg-3 -->
-
-            <div class="col-lg-9">
+            <div class="col-lg-12">
 
                 <div class="card mt-4">
                     <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
@@ -110,13 +104,10 @@ if (!empty($_REQUEST['status'])) {
 
                     </div>
                 </div>
-                <!-- /.card -->
-
-
-                <!-- /.card -->
 
             </div>
-            <!-- /.col-lg-9 -->
+
+
 
         </div>
 

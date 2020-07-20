@@ -16,29 +16,18 @@ nombre text not null unique,
 activo boolean default true
 );
 
-CREATE TABLE subcategorias(
-id serial primary key,
-nombre text not null unique,
-id_categoria integer not null,
-activo boolean default true,
-CONSTRAINT fk_categoria FOREIGN KEY (id_categoria)
-        REFERENCES categorias(id)	
-);
+
 CREATE TABLE productos(
 id serial primary key,
-sku text not null unique,
 nombre text not null unique,
 descripcion text not null,
 imagen text not null,
 id_categoria integer not null,
-id_subcategoria integer default 1,
 cantidad integer not null,
 precio integer not null,
 activo boolean default true,
 CONSTRAINT fk_categoria FOREIGN KEY (id_categoria)
-        REFERENCES categorias(id),
-CONSTRAINT fk_subcateoria FOREIGN KEY (id_subcategoria)
-        REFERENCES subcategorias(id)
+        REFERENCES categorias(id)
 );
 
 
@@ -64,5 +53,4 @@ CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id),
 CONSTRAINT fk_producto FOREIGN KEY (id_producto)
         REFERENCES productos(id)
-
 );

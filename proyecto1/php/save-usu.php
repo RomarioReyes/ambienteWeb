@@ -16,7 +16,7 @@ if ($_POST) {
     $user = authenticate($ced, $contra);
     session_start();
     $_SESSION['user'] = $user;
-    header('Location: logeado.php?status=success&message=Client was created');
+    header('Location: logeado.php');
   } else {
     header('Location: usu-registro.php.php?status=error&message=There was an error');
   }

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if ($_SESSION && $_SESSION['user']) {
     //user already logged in
@@ -10,7 +9,7 @@ $message = "";
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {
         case 'login':
-            $message = 'User does not exists';
+            $message = 'Datos incorrectos intente de nuevo';
             break;
         case 'error':
             $message = 'There was a problem inserting the user';

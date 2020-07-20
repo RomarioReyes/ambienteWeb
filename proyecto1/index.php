@@ -1,23 +1,23 @@
 <?php
-  
-  session_start();
 
-  if ($_SESSION && $_SESSION['user']){
+session_start();
+
+if ($_SESSION && $_SESSION['user']) {
     //user already logged in
     header('Location: php/logeado.php');
-  }
+}
 
-  $message = "";
-  if(!empty($_REQUEST['status'])) {
-    switch($_REQUEST['status']) {
-      case 'login':
-        $message = 'User does not exists';
-      break;
-      case 'error':
-        $message = 'There was a problem inserting the user';
-      break;
+$message = "";
+if (!empty($_REQUEST['status'])) {
+    switch ($_REQUEST['status']) {
+        case 'login':
+            $message = 'User does not exists';
+            break;
+        case 'error':
+            $message = 'There was a problem inserting the user';
+            break;
     }
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +45,29 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <li>
+                        <div class="col-lg-3">
+
+                            <div class="navbar">
+                                <div class="navbar-inner">
+                                    <div class="container">
+                                        <ul class="nav">
+                                            <li class="dropdown" id="accountmenu">
+                                                <a class="dropdown-toggle text-muted" data-toggle="dropdown" href="#">Categorias</a>
+                                                <ul class="dropdown-menu">
+
+                                                    <li><a href="#">Casa</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Mascotas</a></li>
+                                                    <li><a href="#">Dulces</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="php/usu-registro.php">Registrarse <span class="bi bi-chevron-compact-up"></span></a>
@@ -61,37 +84,10 @@
 
     <!-- Page Content -->
     <div class="container">
-
+        <H1 class="text-center text-primary">EShop</H1>
         <div class="row">
 
-            <div class="col-lg-3">
-                <h1 class="my-4 text-primary">EShop</h1>
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <ul class="nav">
-                                <li class="dropdown" id="accountmenu">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown" id="accountmenu">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Electricos</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Robot</a></li>
-                                                <li><a href="#">Carro</a></li>
-                                                <li><a href="#">Cafetera</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Casa</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Mascotas</a></li>
-                                        <li><a href="#">Dulces</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
@@ -103,7 +99,7 @@
                         <h4>$24.99</h4>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
                         <button class="btn btn-primary"> Agregar </button>
-                        
+
                     </div>
                 </div>
                 <!-- /.card -->
