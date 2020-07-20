@@ -1,5 +1,5 @@
 <?php
-
+require('php/functions.php');
 session_start();
 
 if ($_SESSION && $_SESSION['user']) {
@@ -18,6 +18,8 @@ if (!empty($_REQUEST['status'])) {
             break;
     }
 }
+$lista = cargarCategorias();
+$listap = cargarProductos(0);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +43,7 @@ if (!empty($_REQUEST['status'])) {
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                        <a class="nav-link" href="index.php">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -55,11 +57,16 @@ if (!empty($_REQUEST['status'])) {
                                             <li class="dropdown" id="accountmenu">
                                                 <a class="dropdown-toggle text-muted" data-toggle="dropdown" href="#">Categorias</a>
                                                 <ul class="dropdown-menu">
-
-                                                    <li><a href="#">Casa</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Mascotas</a></li>
-                                                    <li><a href="#">Dulces</a></li>
+                                                    <?php
+                                                    if ($lista != false) {
+                                                        while ($fila = pg_fetch_array($lista)) {
+                                                            echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
+                                                    }
+                                                    ?>
+                                                    <a href=""></a>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -93,14 +100,19 @@ if (!empty($_REQUEST['status'])) {
             <div class="col-lg-9">
 
                 <div class="card mt-4">
-                    <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
-                    <div class="card-body">
-                        <h3 class="card-title">Product Name</h3>
-                        <h4>$24.99</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
-                        <button class="btn btn-primary"> Agregar </button>
 
-                    </div>
+                    <?php
+                    if ($listap != false) {
+                        while ($fila = pg_fetch_array($listap)) {
+                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\"  >");
+                            echo ("<div class=\"card-body\">");
+                            echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
+                            echo ("<h4>$" . $fila["precio"] . "</h4>");
+                            echo ("<button class=\"btn btn-primary\"> ver mas </button>");
+                            echo ("</div>");
+                        }
+                    }
+                    ?>
                 </div>
                 <!-- /.card -->
 

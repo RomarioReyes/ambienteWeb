@@ -18,6 +18,6 @@ if ($_POST) {
     $_SESSION['user'] = $user;
     header('Location: logeado.php');
   } else {
-    header('Location: usu-registro.php.php?status=error&message=There was an error');
+    header('Location: usu-registro.php?status=error&message=Error');
   }
 }

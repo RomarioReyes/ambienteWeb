@@ -50,7 +50,7 @@ if (!empty($_REQUEST['status'])) {
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item ">
-                        <a class="nav-link" href="#">Estadisticas<span class="sr-only">(current)</span>
+                        <a class="nav-link" href="logeado.php">Estadisticas<span class="sr-only">(current)</span>
                         </a>
                     </li>
 
@@ -60,7 +60,7 @@ if (!empty($_REQUEST['status'])) {
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>

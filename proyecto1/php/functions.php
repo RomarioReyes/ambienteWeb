@@ -8,20 +8,6 @@ function getConnection()
   return $connection;
 }
 
-
-
-
-function saveClient($name, $ape, $num, $corr, $dir, $ced, $contra)
-{
-
-  $conn = getConnection();
-  $sql = "INSERT INTO usuarios(nombre, apellidos, numero, correo, direccion, cedula, contra, tipo) VALUES ('$name', '$ape', '$num', '$corr',
-    '$dir', '$ced', '$contra', 2)";
-
-  $rs = pg_query($conn, $sql);
-  pg_close($conn);
-  return $rs;
-}
 // categorias
 function saveCategorias($name)
 {
@@ -76,7 +62,7 @@ function editarCategorias($id, $nombre)
 
 
 //productos
-function saveProductos($sku, $name, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
+function saveProductos($name, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
 {
 
   $conn = getConnection();
@@ -87,6 +73,22 @@ function saveProductos($sku, $name, $descripcion, $imagen, $id_categoria, $canti
   pg_close($conn);
   return $rs;
 }
+function cargarProductos($id_categoria){
+  $conn = getConnection();
+  if($id_categoria==0){
+    $sql = " SELECT * FROM productos";
+    $rs = pg_query($conn, $sql);
+    pg_close($conn);
+    return $rs;
+  }
+  $sql = " SELECT * FROM productos WHERE id_categoria='$id_categoria'";
+  $rs = pg_query($conn, $sql);
+  pg_close($conn);
+  return $rs;
+
+}
+
+//carrito
 function saveCarrito($id_usuario, $id_producto, $fecha)
 {
 
@@ -98,11 +100,18 @@ function saveCarrito($id_usuario, $id_producto, $fecha)
   return $rs;
 }
 
+//usuarios
+function saveClient($name, $ape, $num, $corr, $dir, $ced, $contra)
+{
 
+  $conn = getConnection();
+  $sql = "INSERT INTO usuarios(nombre, apellidos, numero, correo, direccion, cedula, contra, tipo) VALUES ('$name', '$ape', '$num', '$corr',
+    '$dir', '$ced', '$contra', 2)";
 
-
-
-
+  $rs = pg_query($conn, $sql);
+  pg_close($conn);
+  return $rs;
+}
 function authenticate($username, $password)
 {
   $conn = getConnection();
@@ -119,4 +128,36 @@ function authenticate($username, $password)
 
   pg_close($conn);
   return false;
+}
+//estadisticas admin
+function cantClientes(){
+  $conn = getConnection();
+  $sql = "SELECT * FROM usuarios WHERE tipo=2";
+  $result = pg_query($conn, $sql);
+  return pg_num_rows($result);
+}
+function cantPvendidos(){
+  $conn = getConnection();
+  $sql = "SELECT * FROM compras";
+  $result = pg_query($conn, $sql);
+  return pg_num_rows($result);
+}
+function totalVentas(){
+  $conn = getConnection();
+  $sql = "SELECT * FROM compras";
+  $count = 0;
+  $result = pg_query($conn, $sql);
+  if (pg_num_rows($result) > 0) {
+    
+    while ($fila = pg_fetch_array($result)) {
+      $id_p=$fila["id_producto"];
+      $sql = "SELECT precio FROM productos WHERE id = '$id_p'";
+      $count+= pg_query($conn, $sql);
+    }
+    pg_close($conn);
+    
+    
+  }
+
+  return $count;
 }

@@ -76,8 +76,7 @@ if (!empty($_REQUEST['status'])) {
             <?php echo $message; ?>
         </div>
         <form action="save-usu.php" method="POST" class="form-action" role="form">
-            <div class="msg">
-                <?php echo $message; ?>
+            
             </div>
             
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">

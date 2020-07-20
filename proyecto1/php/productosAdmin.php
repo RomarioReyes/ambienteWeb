@@ -6,10 +6,8 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
-$cantClientes = cantClientes();
-$cantPvendidos = cantPvendidos();
-$totalVentas = totalVentas();
-$lista = cargarCategorias();
+// $id = $_GET['id'];
+$lista = cargarProductos(0);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,16 +32,13 @@ $lista = cargarCategorias();
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link" href="logeado.php">Estadisticas<span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <?php if ($user["tipo"] == 1) { ?>
                         <li class="nav-item">
                             <a class="nav-link" href="validaCategorias.php?id=1">Categorias<span class="bi bi-chevron-compact-up"></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                         </li>
                     <?php } else { ?>
                         <li class="nav-item">
@@ -59,7 +54,7 @@ $lista = cargarCategorias();
                                                         <?php
                                                         if ($lista != false) {
                                                             while ($fila = pg_fetch_array($lista)) {
-                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">\"" . $fila["nombre"] . "\"</a></li>";
                                                             }
                                                         } else {
                                                             echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
@@ -77,23 +72,15 @@ $lista = cargarCategorias();
                                 </div>
                             </div>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="php/login.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="php/login.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
-                        </li>
-
-
                     <?php } ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
+
+
                 </ul>
             </div>
         </div>
@@ -106,32 +93,29 @@ $lista = cargarCategorias();
 
         <div class="row">
             <div class="col-lg-10">
-
+                <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
                 <div class="card mt-4 bg-sucess">
-                    <?php if ($user["tipo"] == 1) { ?>
-                        <div class="card-body">
+                    <?php
+                    if ($lista != false) {
+                        while ($fila = pg_fetch_array($lista)) {
+                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\"  >");
+                            echo ("<div class=\"card-body\">");
+                            echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
+                            echo ("<h4>$" . $fila["precio"] . "</h4>");
+                            echo ("<button class=\"btn btn-primary\"> ver mas </button>");
+                            echo ("</div>");
+                        }
+                    }
+                    ?>
 
-                            <h3 class="card-title text-danger text-center">Estadisticas Administrativas</h3>
-                            <p class="text-primary text-uppercase">Cantidad de clientes: <?php echo ($cantClientes); ?></p>
-                            <p class="text-info text-uppercase">Cantidad productos vendidos: <?php echo ($cantPvendidos); ?></p>
-                            <p class="text-primary text-uppercase">Monto total ventas: <?php echo ($totalVentas); ?></p>
 
-                        </div>
-                    <?php } else { ?>
-                        <div class="card-body">
-                            <h3 class="card-title text-danger text-center">Estadisticas cliente</h3>
-                            <p class="text-primary text-uppercase">Total de productos adquiridos por el cliente: <?php echo ($cantClientes); ?></p>
-                            <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($cantPvendidos); ?></p>
-                        </div>
-                    <?php } ?>
+
                 </div>
 
             </div>
 
-
-
         </div>
-
+        <a href="crearProducto.php" class="btn btn-primary">Crear</a>
     </div>
     <!-- /.container -->
 
