@@ -58,8 +58,8 @@ function cargarCategoria($id)
   if (pg_num_rows($result) > 0) {
 
     pg_close($conn);
-    $cate=pg_fetch_array($result);
-    return $cate ;
+    $cate = pg_fetch_array($result);
+    return $cate;
   }
 
   pg_close($conn);
@@ -88,21 +88,22 @@ function saveProductos($name, $descripcion, $imagen, $id_categoria, $cantidad, $
   pg_close($conn);
   return $rs;
 }
-function cargarProductos($id_categoria){
+function cargarProductos($id_categoria)
+{
   $conn = getConnection();
-  if($id_categoria==0){
+  if ($id_categoria == 0) {
     $sql = " SELECT * FROM productos where activo='true'";
     $rs = pg_query($conn, $sql);
     pg_close($conn);
     return $rs;
   }
-  $sql = " SELECT * FROM productos WHERE id_categoria='$id_categoria'";
+  $sql = " SELECT * FROM productos WHERE id_categoria='$id_categoria' and activo='true'";
   $rs = pg_query($conn, $sql);
   pg_close($conn);
   return $rs;
-
 }
-function cargarProductoE($id){
+function cargarProductoE($id)
+{
   $conn = getConnection();
   $sql = " SELECT * FROM productos WHERE id='$id'";
   $rs = pg_query($conn, $sql);
@@ -110,11 +111,12 @@ function cargarProductoE($id){
   pg_close($conn);
   return $fila;
 }
-function cargarProducto($id){
+function cargarProducto($id)
+{
   $conn = getConnection();
   $sql = " SELECT * FROM productos WHERE id='$id'";
   $rs = pg_query($conn, $sql);
-  
+
   pg_close($conn);
   return $rs;
 }
@@ -124,18 +126,19 @@ function cargarProducto($id){
 
 
 
-function editProductos($id,$nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio){
+function editProductos($id, $nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
+{
   $conn = getConnection();
   $sql = "UPDATE productos SET nombre='$nombre', descripcion='$descripcion', 
   imagen='$imagen', id_categoria='$id_categoria', cantidad='$cantidad', precio='$precio' WHERE id='$id'";
   $result = pg_query($conn, $sql);
   pg_close($conn);
   return $result;
-
 }
-function deleteProductos($id){
+function deleteProductos($id)
+{
   $conn = getConnection();
-  $sql="UPDATE productos SET activo='false' WHERE id =$id";
+  $sql = "UPDATE productos SET activo='false' WHERE id =$id";
   $result = pg_query($conn, $sql);
   pg_close($conn);
   return $result;
@@ -146,12 +149,27 @@ function saveCarrito($id_usuario, $id_producto, $fecha)
 {
 
   $conn = getConnection();
-  $sql = "INSERT INTO productos(id_usuario, id_producto, fecha) VALUES ('$id_usuario','$id_producto','$fecha')";
+  $sql = "INSERT INTO carrito(id_usuario, id_producto, fecha) VALUES ('$id_usuario','$id_producto','$fecha')";
 
   $rs = pg_query($conn, $sql);
   pg_close($conn);
   return $rs;
 }
+// function cargarcarrito($id)
+// {
+//   $conn = getConnection();
+//   $sql = " SELECT * FROM carrito where activo='true' and id_usuario='$id'";
+//   $rs = pg_query($conn, $sql);
+//   if($rs){
+
+
+//   }
+
+//   $sql = " SELECT * FROM productos WHERE id_categoria='$id_categoria'";
+//   $rs = pg_query($conn, $sql);
+//   pg_close($conn);
+//   return $rs;
+// }
 
 //usuarios
 function saveClient($name, $ape, $num, $corr, $dir, $ced, $contra)
@@ -183,34 +201,62 @@ function authenticate($username, $password)
   return false;
 }
 //estadisticas admin
-function cantClientes(){
+function cantClientes()
+{
   $conn = getConnection();
   $sql = "SELECT * FROM usuarios WHERE tipo=2";
   $result = pg_query($conn, $sql);
   return pg_num_rows($result);
 }
-function cantPvendidos(){
+function cantPvendidos()
+{
   $conn = getConnection();
   $sql = "SELECT * FROM compras";
   $result = pg_query($conn, $sql);
   return pg_num_rows($result);
 }
-function totalVentas(){
+function totalVentas()
+{
   $conn = getConnection();
   $sql = "SELECT * FROM compras";
   $count = 0;
   $result = pg_query($conn, $sql);
   if (pg_num_rows($result) > 0) {
-    
+
     while ($fila = pg_fetch_array($result)) {
-      $id_p=$fila["id_producto"];
+      $id_p = $fila["id_producto"];
       $sql = "SELECT precio FROM productos WHERE id = '$id_p'";
-      $count+= pg_query($conn, $sql);
+      $count += pg_query($conn, $sql);
     }
     pg_close($conn);
-    
-    
   }
-
   return $count;
 }
+// Total de productos adquiridos por el cliente
+// //estadisticas clientes
+// Monto total de compras realizadas por el cliente
+function totalProductosC($id)
+{
+  $conn = getConnection();
+  $sql = "SELECT * FROM compras Where id_usuario='$id'";
+  $result = pg_query($conn, $sql);
+  pg_close($conn);
+  return pg_num_rows($result);
+};
+function montoTotalC($id)
+{
+  $conn = getConnection();
+  $sql = "SELECT * FROM compras WHERE id_usuario='$id'";
+  $count = 0;
+  $result = pg_query($conn, $sql);
+  if (pg_num_rows($result) > 0) {
+
+    while ($fila = pg_fetch_array($result)) {
+      $id_p = $fila["id_producto"];
+      $sql = "SELECT precio FROM productos WHERE id = '$id_p'";
+      $count += pg_query($conn, $sql);
+    }
+    pg_close($conn);
+  }
+  return $count;
+};

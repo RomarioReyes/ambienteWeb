@@ -1,5 +1,14 @@
 <?php
 require('functions.php');
+session_start();
+
+$user = $_SESSION['user'];
+if (!$user) {
+    header('Location: index.php');
+}
+if($user['tipo']=2){
+    header('Location: logeado.php');
+}
 //  nombre text not null unique,
 // descripcion text not null,
 // imagen text not null,

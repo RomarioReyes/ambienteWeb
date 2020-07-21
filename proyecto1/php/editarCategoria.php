@@ -7,6 +7,9 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
+if($user['tipo']=2){
+    header('Location: logeado.php');
+}
 $message = "";
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {

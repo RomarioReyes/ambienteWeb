@@ -10,6 +10,9 @@ $cantClientes = cantClientes();
 $cantPvendidos = cantPvendidos();
 $totalVentas = totalVentas();
 $lista = cargarCategorias();
+$id_usu=$user['id'];
+$totalProductosC= totalProductosC($id_usu);
+$sumaTotalP=montoTotalC($id_usu);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,11 +85,11 @@ $lista = cargarCategorias();
                             <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="php/login.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
+                            <a class="nav-link" href="carrito.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="php/login.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
+                            <a class="nav-link" href="historial.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
                         </li>
 
 
@@ -101,7 +104,7 @@ $lista = cargarCategorias();
 
     <!-- Page Content -->
     <div class="container">
-
+        
         <H1 class="text-center text-primary">EShop</H1>
 
         <div class="row">
@@ -121,8 +124,8 @@ $lista = cargarCategorias();
                         <div class="card-body">
                             <h3 class="card-title text-danger text-center">Estadisticas cliente</h3>
                             <br>
-                            <p class="text-primary text-uppercase">Total de productos adquiridos por el cliente: <?php echo ($cantClientes); ?></p>
-                            <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($cantPvendidos); ?></p>
+                            <p class="text-primary text-uppercase">Total de productos adquiridos por el cliente: <?php echo ($totalProductosC); ?></p>
+                            <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($$sumaTotalP); ?></p>
                             <br>
                                  
                         </div>

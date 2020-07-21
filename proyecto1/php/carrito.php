@@ -9,24 +9,11 @@ if (!$user) {
 if($user['tipo']=1){
     header('Location: logeado.php');
 }
-$message = "";
-if (!empty($_REQUEST['status'])) {
-    switch ($_REQUEST['status']) {
-        case 'eliminado':
-            $message = 'Eliminado exitosamente';
-            break;
-        case 'error':
-            $message = 'There was a problem inserting the category';
-            break;
-        case 'añadido':
-            $message = 'Añadido exitosamente';
-            break;
-    }
-}
-$id = $_GET['id'];
-$lista = cargarCategorias();
-$listaP = cargarProducto($id);
+
+
 $id_usu=$user['id'];
+$lista=cargarProductos(0);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,6 +45,9 @@ $id_usu=$user['id'];
                     <?php if ($user["tipo"] == 1) { ?>
                         <li class="nav-item">
                             <a class="nav-link" href="validaCategorias.php?id=1">Categorias<span class="bi bi-chevron-compact-up"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                         </li>
                     <?php } else { ?>
                         <li class="nav-item">
@@ -91,22 +81,23 @@ $id_usu=$user['id'];
                                 </div>
                             </div>
                         </li>
-                    <?php } ?>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="carrito.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="historial.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
+                        </li>
+
+
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
-
-
                 </ul>
             </div>
         </div>
@@ -114,35 +105,27 @@ $id_usu=$user['id'];
 
     <!-- Page Content -->
     <div class="container">
-
+        
         <H1 class="text-center text-primary">EShop</H1>
-        <div class="msg">
-            <?php echo $message; ?>
-        </div>
+
         <div class="row">
-            <div class="col-lg-10">
-                <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
+            <div class="col-lg-10 "id="productoAdmin">
+
                 <div class="card mt-4 bg-sucess">
-                    <?php
-                    if ($listaP != false) {
-                        while ($fila = pg_fetch_array($listaP)) {
-                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\" >");
+                <?php
+                    if ($lista != false) {
+                        while ($fila = pg_fetch_array($lista)) {
+
                             echo ("<div class=\"card-body\">");
                             echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
-                            echo ("<p class=\"card-title\">" . $fila["descripcion"] . "</p>");
+                            echo ("<h3 class=\"card-title\">" . "Cantidad Restante: " . $fila["cantidad"] . "</h3>");
                             echo ("<h4>$" . $fila["precio"] . "</h4>");
-                            echo ("<h3 class=\"card-title\">" . "Existencias: " . "" . $fila["cantidad"] . "</h3>");
-                            if ($fila["cantidad"] > 0) {
-                                echo ("<a class=\"btn btn-primary\" href=\"añadirCarrito.php?id=" . $fila["id"] ."&"."id_usu="."$id_usu". " \"> Añadir a carrito </a>");
-                            }
-                            
+                            echo ("<a href=\"editarProducto.php?id=" . $fila["id"] . " \" class=\"btn btn-info\"> Editar </a>");
+                            echo ("<a class=\"btn btn-primary\" href=\"eliminarProducto.php?id=" . $fila["id"] . " \"> eliminar </a>");
                             echo ("</div>");
                         }
                     }
                     ?>
-
-
-
                 </div>
 
             </div>
@@ -152,17 +135,23 @@ $id_usu=$user['id'];
         </div>
 
     </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>
         </div>
-        <!-- /.container -->
+        
     </footer>
 
-    <!----jumbotrom----->
+    
 
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
