@@ -6,10 +6,19 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
+$message = "";
+if (!empty($_REQUEST['status'])) {
+    switch ($_REQUEST['status']) {
+        case 'creat':
+            $message = 'Creado exitosamente';
+            break;
+        case 'error':
+            $message = 'There was a problem inserting product';
+            break;
+    }
+}
 $id = $_GET['id'];
-$lista = cargarCategorias();
-$listaP = cargarProductos($id);
-
+$producto=cargarProducto($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +65,7 @@ $listaP = cargarProductos($id);
                                                         <?php
                                                         if ($lista != false) {
                                                             while ($fila = pg_fetch_array($lista)) {
-                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">\"" . $fila["nombre"] . "\"</a></li>";
                                                             }
                                                         } else {
                                                             echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
@@ -76,15 +85,9 @@ $listaP = cargarProductos($id);
                         </li>
                     <?php } ?>
                     <li class="nav-item active">
-                        <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
@@ -100,37 +103,60 @@ $listaP = cargarProductos($id);
 
         <H1 class="text-center text-primary">EShop</H1>
 
-        <div class="row">
-            <div class="col-lg-10">
-            <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
-                <div class="card mt-4 bg-sucess">
-                    <?php
-                    if ($listaP != false) {
-                        while ($fila = pg_fetch_array($listaP)) {
-                            echo ("<img class=\"card-img-top img-fluid\" src=\"" .$fila["imagen"]. "\" >");
-                            echo("<div class=\"card-body\">");
-                            echo("<h3 class=\"card-title\">".$fila["nombre"]."</h3>");
-                            echo("<h4>$".$fila["precio"]."</h4>");
-                            echo("<a class=\"btn btn-primary\" href=\"verMas.php?id=" . $fila["id"] . " \"> ver mas </a>");
-                            echo("</div>");
-                        }
-                    } 
-                    ?>
-                    
-                 
 
-                </div>
-                
-            </div>
-
-
+    </div>
+    <div class="msg">
+        <?php echo $message; ?>
+    </div>
+    <!-- nombre text not null unique,
+descripcion text not null,
+imagen text not null,
+id_categoria integer not null,
+cantidad integer not null,
+precio integer not null, -->
+    <form action="edit-prod.php?id=<?php echo($id);?>" method="POST" class="form-action" role="form">
 
         </div>
 
-    </div>
-    <!-- /.container -->
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">Nombre</label>
+            <input type="text" class="form-control" id=""  value="<?php echo $producto['nombre']?>" required name="nombre" placeholder="Nombre">
+        </div>
 
-    <!-- Footer -->
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">Descripcion</label>
+            <input type="text" class="form-control" id="" value="<?php echo $producto['descripcion']?>" required name="descripcion" placeholder="Descripcion">
+        </div>
+
+
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">Imagen</label>
+            <input type="text" class="form-control" id="" value="<?php echo $producto['imagen']?>" required name="imagen" placeholder="Url imagen">
+        </div>
+
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">Categoria</label>
+            <input type="number" class="form-control" id="" value="<?php echo $producto['id_categoria']?>" required name="categoria" placeholder="categoria">
+        </div>
+
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">Cantidad</label>
+            <input type="number" class="form-control" id=""value="<?php echo $producto['cantidad']?>" required name="cantidad" placeholder="Cantidad a agregar">
+        </div>
+
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="sr-only" for="">precio</label>
+            <input type="number" class="form-control" id=""value="<?php echo $producto['precio']?>" required name="precio" placeholder="Precio en $">
+        </div>
+
+
+        
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </ul>
+
+
+    </form>
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>

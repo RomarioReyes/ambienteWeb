@@ -16,10 +16,7 @@ if ($_POST) {
   $precio = $_REQUEST['precio'];
 
   $producto = saveProductos($nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio);
-  if ($prodcuto) {
-    
-    header('Location: crearProducto.php?status=create');
-  } else {
-    header('Location: crearProducto.php?status=error&message=Error');
-  }
+
+
+  header('Location: crearProducto.php?status=create');
 }

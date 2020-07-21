@@ -6,7 +6,21 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
-// $id = $_GET['id'];
+$message = "";
+if (!empty($_REQUEST['status'])) {
+    switch ($_REQUEST['status']) {
+        case 'eliminado':
+            $message = 'Eliminado exitosamente';
+            break;
+        case 'error':
+            $message = 'There was a problem inserting the category';
+            break;
+        case 'editando':
+            $message = 'Editado exitosamente';
+            break;
+    }
+}
+
 $lista = cargarProductos(0);
 ?>
 <!DOCTYPE html>
@@ -54,7 +68,7 @@ $lista = cargarProductos(0);
                                                         <?php
                                                         if ($lista != false) {
                                                             while ($fila = pg_fetch_array($lista)) {
-                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">\"" . $fila["nombre"] . "\"</a></li>";
+                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
                                                             }
                                                         } else {
                                                             echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
@@ -90,7 +104,9 @@ $lista = cargarProductos(0);
     <div class="container">
 
         <H1 class="text-center text-primary">EShop</H1>
-
+        <div class="msg">
+            <?php echo $message; ?>
+        </div>
         <div class="row">
             <div class="col-lg-10">
                 <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
@@ -98,11 +114,13 @@ $lista = cargarProductos(0);
                     <?php
                     if ($lista != false) {
                         while ($fila = pg_fetch_array($lista)) {
-                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\"  >");
+
                             echo ("<div class=\"card-body\">");
                             echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
+                            echo ("<h3 class=\"card-title\">" . "Cantidad Restante: " . $fila["cantidad"] . "</h3>");
                             echo ("<h4>$" . $fila["precio"] . "</h4>");
-                            echo ("<button class=\"btn btn-primary\"> ver mas </button>");
+                            echo ("<a href=\"editarProducto.php?id=" . $fila["id"] . " \" class=\"btn btn-info\"> Editar </a>");
+                            echo ("<a class=\"btn btn-primary\" href=\"eliminarProducto.php?id=" . $fila["id"] . " \"> eliminar </a>");
                             echo ("</div>");
                         }
                     }

@@ -87,6 +87,36 @@ function cargarProductos($id_categoria){
   return $rs;
 
 }
+function cargarProducto($id){
+  $conn = getConnection();
+  $sql = " SELECT * FROM productos WHERE id='$id'";
+  $rs = pg_query($conn, $sql);
+  
+  pg_close($conn);
+  return $rs;
+}
+
+
+
+
+
+
+function editProductos($id,$nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio){
+  $conn = getConnection();
+  $sql = "UPDATE productos SET nombre='$nombre', descripcion='$descripcion', 
+  imagen='$imagen', id_categoria='$id_categoria', cantidad='$cantidad', precio='$precio' WHERE id='$id'";
+  $result = pg_query($conn, $sql);
+  pg_close($conn);
+  return $result;
+
+}
+function deleteProductos($id){
+  $conn = getConnection();
+  $sql="DELETE FROM PRODUCTOS WHERE id =$id";
+  $result = pg_query($conn, $sql);
+  pg_close($conn);
+  return $result;
+}
 
 //carrito
 function saveCarrito($id_usuario, $id_producto, $fecha)
