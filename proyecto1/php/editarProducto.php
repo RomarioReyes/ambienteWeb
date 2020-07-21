@@ -18,7 +18,7 @@ if (!empty($_REQUEST['status'])) {
     }
 }
 $id = $_GET['id'];
-$producto=cargarProducto($id);
+$producto=cargarProductoE($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">

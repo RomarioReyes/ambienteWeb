@@ -87,6 +87,14 @@ function cargarProductos($id_categoria){
   return $rs;
 
 }
+function cargarProductoE($id){
+  $conn = getConnection();
+  $sql = " SELECT * FROM productos WHERE id='$id'";
+  $rs = pg_query($conn, $sql);
+  $fila = pg_fetch_array($rs);
+  pg_close($conn);
+  return $fila;
+}
 function cargarProducto($id){
   $conn = getConnection();
   $sql = " SELECT * FROM productos WHERE id='$id'";

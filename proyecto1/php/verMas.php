@@ -113,10 +113,10 @@ $listaP = cargarProducto($id);
                             echo ("<p class=\"card-title\">" . $fila["descripcion"] . "</p>");
                             echo ("<h4>$" . $fila["precio"] . "</h4>");
                             echo ("<h3 class=\"card-title\">" . "Existencias: " . "" . $fila["cantidad"] . "</h3>");
-                            if ($fila["cantidad"] == 0) {
+                            if ($fila["cantidad"] > 0) {
                                 echo ("<a class=\"btn btn-primary\" href=\"añadirCarrito.php?id=" . $fila["id"] . " \"> Añadir a carrito </a>");
                             }
-                            echo ("<a class=\"btn btn-primary\" href=\"añadirCarrito.php?id=" . $fila["id"] . " \"> Añadir a carrito </a>");
+                            
                             echo ("</div>");
                         }
                     }

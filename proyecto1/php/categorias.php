@@ -110,7 +110,7 @@ if (!empty($_REQUEST['status'])) {
                 </div>
                 
       
-                <button type="submit" class="btn btn-primary"> Crear nueva </button>
+                <button type="submit" class="btn btn-primary btn-primary"> Crear nueva </button>
             </form>
 
 
