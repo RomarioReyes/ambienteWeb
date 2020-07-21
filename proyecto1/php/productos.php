@@ -56,7 +56,9 @@ $listaP = cargarProductos($id);
                                                         <?php
                                                         if ($lista != false) {
                                                             while ($fila = pg_fetch_array($lista)) {
-                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                if ($fila["activo"] == true) {
+                                                                    echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                } 
                                                             }
                                                         } else {
                                                             echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
@@ -102,25 +104,25 @@ $listaP = cargarProductos($id);
 
         <div class="row">
             <div class="col-lg-10">
-            <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
+                <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
                 <div class="card mt-4 bg-sucess">
                     <?php
                     if ($listaP != false) {
                         while ($fila = pg_fetch_array($listaP)) {
-                            echo ("<img class=\"card-img-top img-fluid\" src=\"" .$fila["imagen"]. "\" >");
-                            echo("<div class=\"card-body\">");
-                            echo("<h3 class=\"card-title\">".$fila["nombre"]."</h3>");
-                            echo("<h4>$".$fila["precio"]."</h4>");
-                            echo("<a class=\"btn btn-primary\" href=\"verMas.php?id=" . $fila["id"] . " \"> ver mas </a>");
-                            echo("</div>");
+                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\" >");
+                            echo ("<div class=\"card-body\">");
+                            echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
+                            echo ("<h4>$" . $fila["precio"] . "</h4>");
+                            echo ("<a class=\"btn btn-primary\" href=\"verMas.php?id=" . $fila["id"] . " \"> ver mas </a>");
+                            echo ("</div>");
                         }
-                    } 
+                    }
                     ?>
-                    
-                 
+
+
 
                 </div>
-                
+
             </div>
 
 

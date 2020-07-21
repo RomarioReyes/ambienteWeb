@@ -16,9 +16,13 @@ if (!empty($_REQUEST['status'])) {
         case 'eliminado':
             $message = 'Eliminado exitosamente';
             break;
+        case 'no':
+            $message = 'Categoria con productos asociados';
+            break;
         case 'error':
             $message = 'There was a problem inserting the category';
             break;
+
         case 'editando':
             $nombe = $_GET['nombre'];
             $id = $_GET['id'];
@@ -105,11 +109,11 @@ if (!empty($_REQUEST['status'])) {
                 <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label class="sr-only" for="">Nombre</label>
                     <input type="text" class="form-control" id="" required name="name" placeholder="Nombre">
-                   
+
 
                 </div>
-                
-      
+
+
                 <button type="submit" class="btn btn-primary btn-primary"> Crear nueva </button>
             </form>
 

@@ -18,7 +18,9 @@ if (!empty($_REQUEST['status'])) {
     }
 }
 $id = $_GET['id'];
-$producto=cargarProductoE($id);
+$producto = cargarProductoE($id);
+$cate = cargarCategoria($producto["id_categoria"]);
+$listaC = cargarCategorias();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +89,7 @@ $producto=cargarProductoE($id);
                     <li class="nav-item active">
                         <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
@@ -106,7 +108,7 @@ $producto=cargarProductoE($id);
 
     </div>
     <div class="msg">
-        <?php echo $message; ?>
+        <?php echo $message ?>
     </div>
     <!-- nombre text not null unique,
 descripcion text not null,
@@ -114,43 +116,60 @@ imagen text not null,
 id_categoria integer not null,
 cantidad integer not null,
 precio integer not null, -->
-    <form action="edit-prod.php?id=<?php echo($id);?>" method="POST" class="form-action" role="form">
+    <form action="edit-prod.php?id=<?php echo ($id); ?>" method="POST" class="form-action" role="form" id="product">
 
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">Nombre</label>
-            <input type="text" class="form-control" id=""  value="<?php echo $producto['nombre']?>" required name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control" id="" value="<?php echo $producto['nombre'] ?>" required name="nombre" placeholder="Nombre">
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">Descripcion</label>
-            <input type="text" class="form-control" id="" value="<?php echo $producto['descripcion']?>" required name="descripcion" placeholder="Descripcion">
+            <input type="text" class="form-control" id="" value="<?php echo $producto['descripcion'] ?>" required name="descripcion" placeholder="Descripcion">
         </div>
 
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">Imagen</label>
-            <input type="text" class="form-control" id="" value="<?php echo $producto['imagen']?>" required name="imagen" placeholder="Url imagen">
+            <input type="text" class="form-control" id="" value="<?php echo $producto['imagen'] ?>" required name="imagen" placeholder="Url imagen">
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <label class="sr-only" for="">Categoria</label>
-            <input type="number" class="form-control" id="" value="<?php echo $producto['id_categoria']?>" required name="categoria" placeholder="categoria">
+            <label for="categorias" class="text-primary">Categorias:</label>
+            <select name="categorias" id="categorias" form="product">
+                <?php
+
+                if ($listaC != false) {
+                    while ($fila = pg_fetch_array($listaC)) {
+                        if ($fila["id"] === $cate["id"]) {
+                            echo "<option class=" . "text-primary" . " value=" . $fila["id"] . " selected="."selected"." >" . $fila["nombre"] . "</option>";
+                        } else {
+                            echo "<option class=" . "text-primary" . " value=" . $fila["id"] . " >" . $fila["nombre"] . "</option>";
+                        }
+                    }
+                }
+
+                ?>
+                <!-- "<li><a href=\"productos.php?id=" . $fila["id"] . " \">\"" . $fila["nombre"] . "\"</a></li>";
+                <option value="volvo">Volvo</option> -->
+
+            </select>
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">Cantidad</label>
-            <input type="number" class="form-control" id=""value="<?php echo $producto['cantidad']?>" required name="cantidad" placeholder="Cantidad a agregar">
+            <input type="number" class="form-control" id="" value="<?php echo $producto['cantidad'] ?>" required name="cantidad" placeholder="Cantidad a agregar">
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">precio</label>
-            <input type="number" class="form-control" id=""value="<?php echo $producto['precio']?>" required name="precio" placeholder="Precio en $">
+            <input type="number" class="form-control" id="" value="<?php echo $producto['precio'] ?>" required name="precio" placeholder="Precio en $">
         </div>
 
 
-        
+
 
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </ul>

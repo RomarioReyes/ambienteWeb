@@ -9,7 +9,7 @@ if (!$user) {
 $message = "";
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {
-        case 'creat':
+        case 'create':
             $message = 'Creado exitosamente';
             break;
         case 'error':
@@ -19,6 +19,8 @@ if (!empty($_REQUEST['status'])) {
 }
 // $id = $_GET['id'];
 $lista = cargarProductos(0);
+$listaC = cargarCategorias();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +89,7 @@ $lista = cargarProductos(0);
                     <li class="nav-item active">
                         <a class="nav-link" href="productosAdmin.php">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
@@ -114,7 +116,7 @@ imagen text not null,
 id_categoria integer not null,
 cantidad integer not null,
 precio integer not null, -->
-    <form action="save-prod.php" method="POST" class="form-action" role="form">
+    <form action="save-prod.php" method="POST" class="form-action" role="form" id="product">
 
         </div>
 
@@ -134,9 +136,26 @@ precio integer not null, -->
             <input type="text" class="form-control" id="" required name="imagen" placeholder="Url imagen">
         </div>
 
-        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label class="sr-only" for="">Categoria</label>
             <input type="number" class="form-control" id="" required name="categoria" placeholder="categoria">
+        </div> -->
+        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label for="categorias" class="text-primary">Categorias:</label>
+            <select name="categorias" id="categorias" form="product">
+                <?php
+
+                if ($listaC != false) {
+                    while ($fila = pg_fetch_array($listaC)) {
+                        echo "<option class="."text-primary"." value=".$fila["id"]." >" . $fila["nombre"] . "</option>";
+                    }
+                }
+
+                ?>
+                <!-- "<li><a href=\"productos.php?id=" . $fila["id"] . " \">\"" . $fila["nombre"] . "\"</a></li>";
+                <option value="volvo">Volvo</option> -->
+
+            </select>
         </div>
 
         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -150,13 +169,17 @@ precio integer not null, -->
         </div>
 
 
-        
+
 
         <button type="submit" class="btn btn-primary">Registrar</button>
         </ul>
 
 
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>

@@ -28,12 +28,12 @@ function deleteCategorias($id)
 
   if (pg_num_rows($result) > 0) {
     pg_close($conn);
-    return " ERROR La categoria tiene productos asociados";
+    return 1;
   }
   $sql = "DELETE FROM categorias WHERE id =$id";
   $result = pg_query($conn, $sql);
   pg_close($conn);
-  return "Eliminado Exitosamente";
+  return 2;
 }
 function cargarCategorias()
 {
@@ -45,6 +45,21 @@ function cargarCategorias()
     pg_close($conn);
 
     return $result;
+  }
+
+  pg_close($conn);
+  return false;
+};
+function cargarCategoria($id)
+{
+  $conn = getConnection();
+  $sql = "SELECT * FROM categorias WHERE id='$id'";
+  $result = pg_query($conn, $sql);
+  if (pg_num_rows($result) > 0) {
+
+    pg_close($conn);
+    $cate=pg_fetch_array($result);
+    return $cate ;
   }
 
   pg_close($conn);
@@ -76,7 +91,7 @@ function saveProductos($name, $descripcion, $imagen, $id_categoria, $cantidad, $
 function cargarProductos($id_categoria){
   $conn = getConnection();
   if($id_categoria==0){
-    $sql = " SELECT * FROM productos";
+    $sql = " SELECT * FROM productos where activo='true'";
     $rs = pg_query($conn, $sql);
     pg_close($conn);
     return $rs;
@@ -120,7 +135,7 @@ function editProductos($id,$nombre, $descripcion, $imagen, $id_categoria, $canti
 }
 function deleteProductos($id){
   $conn = getConnection();
-  $sql="DELETE FROM PRODUCTOS WHERE id =$id";
+  $sql="UPDATE productos SET activo='false' WHERE id =$id";
   $result = pg_query($conn, $sql);
   pg_close($conn);
   return $result;

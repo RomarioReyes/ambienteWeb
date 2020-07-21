@@ -5,7 +5,7 @@ if ($_POST) {
     $nombre = $_REQUEST['nombre'];
     $descripcion = $_REQUEST['descripcion'];
     $imagen = $_REQUEST['imagen'];
-    $id_categoria = $_REQUEST['categoria'];
+    $id_categoria = $_REQUEST['categorias'];
     $cantidad = $_REQUEST['cantidad'];
     $precio = $_REQUEST['precio'];
 

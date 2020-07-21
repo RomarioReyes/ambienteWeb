@@ -68,7 +68,9 @@ $lista = cargarProductos(0);
                                                         <?php
                                                         if ($lista != false) {
                                                             while ($fila = pg_fetch_array($lista)) {
-                                                                echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                
+                                                                    echo "<li><a href=\"productos.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                                
                                                             }
                                                         } else {
                                                             echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
@@ -107,8 +109,8 @@ $lista = cargarProductos(0);
         <div class="msg">
             <?php echo $message; ?>
         </div>
-        <div class="row">
-            <div class="col-lg-10">
+        <div class="row ">
+            <div class="col-lg-6"id="productoAdmin">
                 <!-- href=\"editarCategoria.php?id=" . $fila["id"] . " \" -->
                 <div class="card mt-4 bg-sucess">
                     <?php
@@ -129,11 +131,11 @@ $lista = cargarProductos(0);
 
 
                 </div>
-
+                <a href="crearProducto.php" class="btn btn-primary">Crear</a>  
             </div>
 
         </div>
-        <a href="crearProducto.php" class="btn btn-primary">Crear</a>
+        
     </div>
     <!-- /.container -->
 

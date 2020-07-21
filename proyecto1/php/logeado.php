@@ -120,8 +120,11 @@ $lista = cargarCategorias();
                     <?php } else { ?>
                         <div class="card-body">
                             <h3 class="card-title text-danger text-center">Estadisticas cliente</h3>
+                            <br>
                             <p class="text-primary text-uppercase">Total de productos adquiridos por el cliente: <?php echo ($cantClientes); ?></p>
                             <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($cantPvendidos); ?></p>
+                            <br>
+                                 
                         </div>
                     <?php } ?>
                 </div>
@@ -133,17 +136,23 @@ $lista = cargarCategorias();
         </div>
 
     </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>
         </div>
-        <!-- /.container -->
+        
     </footer>
 
-    <!----jumbotrom----->
+    
 
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
