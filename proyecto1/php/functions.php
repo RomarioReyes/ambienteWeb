@@ -155,6 +155,25 @@ function saveCarrito($id_usuario, $id_producto, $fecha)
   pg_close($conn);
   return $rs;
 }
+function cargarCarrito($id){
+  $conn = getConnection();
+  $sql = "SELECT p.id, p.nombre,p.imagen, p.id_categoria, p.cantidad, p.precio, p.activo, p.descripcion, c.id as id_carrito
+  FROM productos p INNER JOIN carrito c ON p.id = c.id_producto 
+  INNER JOIN usuarios u ON u.id = '$id' WHERE p.activo='true'";
+  $rs = pg_query($conn, $sql);
+  pg_close($conn);
+  return $rs;
+
+}
+function deleteElementoCarrito($id)
+{
+  $conn = getConnection();
+  $sql = " DELETE  FROM carrito  WHERE id ='$id'";
+  $result = pg_query($conn, $sql);
+  pg_close($conn);
+  return $result;
+
+}
 // function cargarcarrito($id)
 // {
 //   $conn = getConnection();

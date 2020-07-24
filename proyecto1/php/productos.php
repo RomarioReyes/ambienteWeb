@@ -81,11 +81,11 @@ $listaP = cargarProductos($id);
                         <a class="nav-link" href="productos.php?id=0">Productos <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="carrito.php">Carrito <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="historial.php">Historial de compras<span class="bi bi-chevron-compact-up"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Cerrar sesion <span class="bi bi-chevron-compact-up"></span></a>

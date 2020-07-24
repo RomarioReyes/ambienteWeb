@@ -6,14 +6,28 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
-if($user['tipo']==1){
+if ($user['tipo'] == 1) {
     header('Location: logeado.php');
 }
 
 
-$id_usu=$user['id'];
-$lista=cargarProductos(0);
-
+$id_usu = $user['id'];
+$lista = cargarCategorias(0);
+$listaCarrito = cargarCarrito($user['id']);
+$message = "";
+if (!empty($_REQUEST['status'])) {
+    switch ($_REQUEST['status']) {
+        case 'eliminado':
+            $message = 'Eliminado exitosamente';
+            break;
+        case 'error':
+            $message = 'There was a problem inserting the category';
+            break;
+        case 'compra realizada':
+            $message = 'Editado exitosamente';
+            break;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +40,7 @@ $lista=cargarProductos(0);
     <title>Principal</title>
 </head>
 
-<body>
+<body id="carrito">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -105,25 +119,27 @@ $lista=cargarProductos(0);
 
     <!-- Page Content -->
     <div class="container">
-        
-        <H1 class="text-center text-primary">EShop</H1>
 
+        <H1 class="text-center text-primary">EShop</H1>
+        <?php echo $message; ?>
         <div class="row">
-            <div class="col-lg-10 "id="productoAdmin">
+            <div class="col-lg-10 " id="productoUsuario">
 
                 <div class="card mt-4 bg-sucess">
-                <?php
-                    if ($lista != false) {
-                        while ($fila = pg_fetch_array($lista)) {
-
+                    <?php
+                    if ($listaCarrito != false) {
+                        while ($fila = pg_fetch_array($listaCarrito)) {
+                            echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\" >");
                             echo ("<div class=\"card-body\">");
                             echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
-                            echo ("<h3 class=\"card-title\">" . "Cantidad Restante: " . $fila["cantidad"] . "</h3>");
+                            echo ("<h3 class=\"card-title\">"  . $fila["descripcion"] . "</h3>");
                             echo ("<h4>$" . $fila["precio"] . "</h4>");
-                            echo ("<a href=\"editarProducto.php?id=" . $fila["id"] . " \" class=\"btn btn-info\"> Editar </a>");
-                            echo ("<a class=\"btn btn-primary\" href=\"eliminarProducto.php?id=" . $fila["id"] . " \"> eliminar </a>");
+                            echo ("<a class=\"btn btn-primary\" href=\"eliminarProductoCliente.php?id=" . $fila["id_carrito"] . " \"> eliminar </a>");
                             echo ("</div>");
                         }
+                    }
+                    if (pg_num_rows($listaCarrito) >0 ) {
+                        echo ("<a class=\"btn btn-info\" href=\"Checkout.php?id=" . $user['id'] . " \"> Checkout </a>");
                     }
                     ?>
                 </div>
@@ -142,16 +158,16 @@ $lista=cargarProductos(0);
     <br>
     <br>
     <br>
-    
-    
+
+
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>
         </div>
-        
+
     </footer>
 
-    
+
 
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>

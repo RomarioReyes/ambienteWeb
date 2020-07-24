@@ -8,3 +8,15 @@ a:link{
 #productoAdmin{
   margin: auto;
 }
+#productoUsuario{
+  margin: auto;
+  max-width: 60% ;
+  max-height: 60%;
+  
+}
+/* #carrito{
+  background-image: url("../imagenes/carritoBG.jpg");
+  height: 100%;
+  width: 100%;
+
+} */
