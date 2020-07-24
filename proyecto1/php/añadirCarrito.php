@@ -2,7 +2,7 @@
 require('functions.php');
 session_start();
 $user = $_SESSION['user'];
-if($user['tipo']=1){
+if($user['tipo']==1){
     header('Location: logeado.php');
 }
 $id = $_GET['id'];

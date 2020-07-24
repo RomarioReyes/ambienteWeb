@@ -6,7 +6,7 @@
   if (!$user) {
       header('Location: index.php');
   }
-  if($user['tipo']=2){
+  if($user['tipo']==2){
       header('Location: logeado.php');
   }
 

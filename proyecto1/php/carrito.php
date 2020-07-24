@@ -6,7 +6,7 @@ $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
-if($user['tipo']=1){
+if($user['tipo']==1){
     header('Location: logeado.php');
 }
 

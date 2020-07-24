@@ -12,6 +12,7 @@ $totalVentas = totalVentas();
 $lista = cargarCategorias();
 $id_usu=$user['id'];
 $totalProductosC= totalProductosC($id_usu);
+
 $sumaTotalP=montoTotalC($id_usu);
 ?>
 <!DOCTYPE html>
@@ -125,7 +126,7 @@ $sumaTotalP=montoTotalC($id_usu);
                             <h3 class="card-title text-danger text-center">Estadisticas cliente</h3>
                             <br>
                             <p class="text-primary text-uppercase">Total de productos adquiridos por el cliente: <?php echo ($totalProductosC); ?></p>
-                            <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($$sumaTotalP); ?></p>
+                            <p class="text-info text-uppercase">Monto total de compras realizadas por el cliente: <?php echo ($sumaTotalP); ?></p>
                             <br>
                                  
                         </div>

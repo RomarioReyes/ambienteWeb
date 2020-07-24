@@ -1,5 +1,5 @@
 <?php
-require('php/functions.php');
+require('functions.php');
 session_start();
 
 if ($_SESSION && $_SESSION['user']) {
@@ -18,8 +18,9 @@ if (!empty($_REQUEST['status'])) {
             break;
     }
 }
+$id = $_GET['id'];
 $lista = cargarCategorias();
-$listap = cargarProductos(0);
+$listaP = cargarProductos($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +28,8 @@ $listap = cargarProductos(0);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
     <title>Principal</title>
 </head>
 
@@ -43,7 +44,7 @@ $listap = cargarProductos(0);
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home
+                        <a class="nav-link" href="../index.php">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -60,13 +61,13 @@ $listap = cargarProductos(0);
                                                     <?php
                                                     if ($lista != false) {
                                                         while ($fila = pg_fetch_array($lista)) {
-                                                            echo "<li><a href=\"php/productosLogout.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
+                                                            echo "<li><a href=\"productosLogout.php?id=" . $fila["id"] . " \">" . $fila["nombre"] . "</a></li>";
                                                         }
                                                     } else {
                                                         echo "<tr><td>sin datos.</td><td>sin datos.</td><td>sin datos.</td></tr>";
                                                     }
                                                     ?>
-                                                    <a href=""></a>
+                                                    
                                                 </ul>
                                             </li>
                                         </ul>
@@ -77,10 +78,10 @@ $listap = cargarProductos(0);
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="php/usu-registro.php">Registrarse <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="usu-registro.php">Registrarse <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/login.php">loguearse <span class="bi bi-chevron-compact-up"></span></a>
+                        <a class="nav-link" href="login.php">loguearse <span class="bi bi-chevron-compact-up"></span></a>
                     </li>
 
 
@@ -102,8 +103,8 @@ $listap = cargarProductos(0);
                 <div class="card mt-4">
 
                     <?php
-                    if ($listap != false) {
-                        while ($fila = pg_fetch_array($listap)) {
+                    if ($listaP != false) {
+                        while ($fila = pg_fetch_array($listaP)) {
                             echo ("<img class=\"card-img-top img-fluid\" src=\"" . $fila["imagen"] . "\"  >");
                             echo ("<div class=\"card-body\">");
                             echo ("<h3 class=\"card-title\">" . $fila["nombre"] . "</h3>");
@@ -112,6 +113,11 @@ $listap = cargarProductos(0);
                             echo ("</div>");
                         }
                     }
+                    
+                        
+                       
+                        
+                    
                     ?>
                 </div>
                 <!-- /.card -->
