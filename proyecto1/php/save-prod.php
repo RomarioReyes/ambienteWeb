@@ -1,7 +1,7 @@
 <?php
 require('functions.php');
 session_start();
-
+//valida si el usuario esta logueado y si tiene permisos para ver esta pagina
 $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
@@ -9,13 +9,7 @@ if (!$user) {
 if($user['tipo']=2){
     header('Location: logeado.php');
 }
-//  nombre text not null unique,
-// descripcion text not null,
-// imagen text not null,
-// id_categoria integer not null,
-// cantidad integer not null,
-// precio integer not null,
-
+//recoge datos del formulario
 if ($_POST) {
   $nombre = $_REQUEST['nombre'];
   $descripcion = $_REQUEST['descripcion'];
@@ -23,9 +17,13 @@ if ($_POST) {
   $id_categoria = $_REQUEST['categorias'];
   $cantidad = $_REQUEST['cantidad'];
   $precio = $_REQUEST['precio'];
-
+//ejecuta la funcion
   $producto = saveProductos($nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio);
+  if ($producto) {
+    header('Location: crearProducto.php?status=create');
+  } else {
+    header('Location: crearProducto.php?status=existe');
+  }
 
-
-  header('Location: crearProducto.php?status=create');
+ 
 }

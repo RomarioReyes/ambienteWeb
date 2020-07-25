@@ -1,4 +1,5 @@
 <?php
+//valida si el usuario esta logueado y si tiene permisos para ver esta pagina
 require('functions.php');
 session_start();
 
@@ -10,11 +11,13 @@ if ($user['tipo'] == 1) {
     header('Location: logeado.php');
 }
 
-
+//carga listas pertinentes para el cargado de datos
 $id_usu = $user['id'];
 $lista = cargarCategorias(0);
 $listaCarrito = cargarCarrito($user['id']);
 $message = "";
+
+//pregunta si se envia algun mensaje de otro pagina y lo guarda en una variable para imprimir despues
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {
         case 'eliminado':
@@ -159,7 +162,7 @@ if (!empty($_REQUEST['status'])) {
     <br>
     <br>
 
-
+<!---footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; EShop 2020</p>

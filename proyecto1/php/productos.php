@@ -1,11 +1,12 @@
 <?php
 require('functions.php');
 session_start();
-
+//valida si el usuario esta logueado y si tiene permisos para ver esta pagina
 $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
 }
+//recupera datos para cargar la pagina
 $id = $_GET['id'];
 $lista = cargarCategorias();
 $listaP = cargarProductos($id);

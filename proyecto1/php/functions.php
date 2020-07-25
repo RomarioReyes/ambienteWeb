@@ -1,6 +1,6 @@
 <?php
 
-
+// funcion que da conexion a la base de datos
 function getConnection()
 {
   $connection = pg_connect("host='localhost' dbname=AmbienteWebP1 port=5432 user=postgres password=roma5698") or die("Error de Conexion" . pg_last_error());
@@ -9,6 +9,8 @@ function getConnection()
 }
 
 // categorias
+
+//Funcion que toma el nombre de la categoria y la inserta
 function saveCategorias($name)
 {
 
@@ -19,6 +21,7 @@ function saveCategorias($name)
   pg_close($conn);
   return $rs;
 }
+//funcion que elimina categoria, primero valida que no tenga productos asociados
 function deleteCategorias($id)
 {
   $conn = getConnection();
@@ -35,6 +38,7 @@ function deleteCategorias($id)
   pg_close($conn);
   return 2;
 }
+//funcion que carga todas las categorias para mostrarlas
 function cargarCategorias()
 {
   $conn = getConnection();
@@ -50,6 +54,7 @@ function cargarCategorias()
   pg_close($conn);
   return false;
 };
+//funcion para cargar un categoria en concreto
 function cargarCategoria($id)
 {
   $conn = getConnection();
@@ -65,6 +70,7 @@ function cargarCategoria($id)
   pg_close($conn);
   return false;
 };
+//funcion que edita la categoria que se envia por parametros
 function editarCategorias($id, $nombre)
 {
   $conn = getConnection();
@@ -77,6 +83,8 @@ function editarCategorias($id, $nombre)
 
 
 //productos
+
+//funcion que gurda los productos en la base de datos
 function saveProductos($name, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
 {
 
@@ -88,6 +96,8 @@ function saveProductos($name, $descripcion, $imagen, $id_categoria, $cantidad, $
   pg_close($conn);
   return $rs;
 }
+
+//funcion que trae todos los productos asociados a la categoria
 function cargarProductos($id_categoria)
 {
   $conn = getConnection();
@@ -102,6 +112,7 @@ function cargarProductos($id_categoria)
   pg_close($conn);
   return $rs;
 }
+//funcion que trae el producto para llenar el form y asi editar lo que se necesite
 function cargarProductoE($id)
 {
   $conn = getConnection();
@@ -111,6 +122,7 @@ function cargarProductoE($id)
   pg_close($conn);
   return $fila;
 }
+//carga el producto por el id
 function cargarProducto($id)
 {
   $conn = getConnection();
@@ -125,7 +137,7 @@ function cargarProducto($id)
 
 
 
-
+//funcion que edita los productos los actualiza al estado desactivado
 function editProductos($id, $nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
 {
   $conn = getConnection();
@@ -135,6 +147,7 @@ function editProductos($id, $nombre, $descripcion, $imagen, $id_categoria, $cant
   pg_close($conn);
   return $result;
 }
+//funcion que elimina producto mediante el id
 function deleteProductos($id)
 {
   $conn = getConnection();
@@ -145,16 +158,19 @@ function deleteProductos($id)
 }
 
 //carrito
+
+//funcion que agrega al carrito 
 function saveCarrito($id_usuario, $id_producto, $fecha)
 {
 
   $conn = getConnection();
-  $sql = "INSERT INTO carrito(id_usuario, id_producto, fecha) VALUES ('$id_usuario','$id_producto','$fecha')";
+  $sql = "INSERT INTO carrito(id_usuario, id_producto, fecha) VALUES ('$id_usuario','$id_producto',now()";
 
   $rs = pg_query($conn, $sql);
   pg_close($conn);
   return $rs;
 }
+//funcion que carga los productos del usuario en el carrito
 function cargarCarrito($id){
   $conn = getConnection();
   $sql = "SELECT p.id, p.nombre,p.imagen, p.id_categoria, p.cantidad, p.precio, p.activo, p.descripcion, c.id as id_carrito
@@ -165,6 +181,7 @@ function cargarCarrito($id){
   return $rs;
 
 }
+//funcion que borra productos del carrito
 function deleteElementoCarrito($id)
 {
   $conn = getConnection();
@@ -174,23 +191,17 @@ function deleteElementoCarrito($id)
   return $result;
 
 }
-// function cargarcarrito($id)
-// {
-//   $conn = getConnection();
-//   $sql = " SELECT * FROM carrito where activo='true' and id_usuario='$id'";
-//   $rs = pg_query($conn, $sql);
-//   if($rs){
+//funcion que hace checkout
+function checkout($id,$id_){
 
 
-//   }
 
-//   $sql = " SELECT * FROM productos WHERE id_categoria='$id_categoria'";
-//   $rs = pg_query($conn, $sql);
-//   pg_close($conn);
-//   return $rs;
-// }
+}
+
 
 //usuarios
+
+//funcion que guarda cientes
 function saveClient($name, $ape, $num, $corr, $dir, $ced, $contra)
 {
 
@@ -202,6 +213,8 @@ function saveClient($name, $ape, $num, $corr, $dir, $ced, $contra)
   pg_close($conn);
   return $rs;
 }
+
+//funcion que autentifica cedula y contraseña para poder loguearse
 function authenticate($username, $password)
 {
   $conn = getConnection();
@@ -220,6 +233,8 @@ function authenticate($username, $password)
   return false;
 }
 //estadisticas admin
+
+//retorna la cantidad de clientes en la base de datos
 function cantClientes()
 {
   $conn = getConnection();
@@ -227,6 +242,7 @@ function cantClientes()
   $result = pg_query($conn, $sql);
   return pg_num_rows($result);
 }
+//retorna la cantidad de productos vendidos
 function cantPvendidos()
 {
   $conn = getConnection();
@@ -234,6 +250,7 @@ function cantPvendidos()
   $result = pg_query($conn, $sql);
   return pg_num_rows($result);
 }
+//retorna la monto total de ventas
 function totalVentas()
 {
   $conn = getConnection();
@@ -254,6 +271,10 @@ function totalVentas()
 // Total de productos adquiridos por el cliente
 // //estadisticas clientes
 // Monto total de compras realizadas por el cliente
+
+//estadisticas cliente
+
+//retorna el tota de productos comprados por el usuario
 function totalProductosC($id)
 {
   $conn = getConnection();
@@ -262,6 +283,7 @@ function totalProductosC($id)
   pg_close($conn);
   return pg_num_rows($result);
 };
+//retorna el monto total de compras del usuario
 function montoTotalC($id)
 {
   $conn = getConnection();

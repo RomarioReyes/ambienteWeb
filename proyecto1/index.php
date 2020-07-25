@@ -135,7 +135,7 @@ $listap = cargarProductos(0);
         <!-- /.container -->
     </footer>
 
-    <!----jumbotrom----->
+    
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

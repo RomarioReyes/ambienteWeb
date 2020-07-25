@@ -1,10 +1,11 @@
 <?php
 session_start();
+//valida si el usuario esta logueado y si tiene permisos para ver esta pagina
 if ($_SESSION && $_SESSION['user']) {
     //user already logged in
     header('Location: logeado.php');
 }
-
+//pregunta si se envia algun mensaje de otro pagina y lo guarda en una variable para imprimir despues
 $message = "";
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {

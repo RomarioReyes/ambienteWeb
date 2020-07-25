@@ -1,8 +1,11 @@
 <?php
 require('functions.php');
+//carga de datos
 $lista = cargarCategorias();
-session_start();
 $id = $_GET['id'];
+session_start();
+//valida si el usuario esta logueado y si tiene permisos para ver esta pagina
+//pregunta si se envia algun mensaje de otro pagina y lo guarda en una variable para imprimir despues
 $user = $_SESSION['user'];
 if (!$user) {
     header('Location: index.php');
@@ -10,6 +13,7 @@ if (!$user) {
 if($user['tipo']==2){
     header('Location: logeado.php');
 }
+//pregunta si se envia algun mensaje de otro pagina y lo guarda en una variable para imprimir despues
 $message = "";
 if (!empty($_REQUEST['status'])) {
     switch ($_REQUEST['status']) {
