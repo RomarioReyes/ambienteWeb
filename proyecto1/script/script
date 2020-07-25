@@ -48,7 +48,7 @@ id serial primary key,
 id_usuario integer not null,
 id_producto integer not null,
 fecha text not null,
-orden integer not null,
+orden text not null,
 CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id),
 CONSTRAINT fk_producto FOREIGN KEY (id_producto)
@@ -59,3 +59,7 @@ CONSTRAINT fk_producto FOREIGN KEY (id_producto)
 select p.id, p.nombre,p.imagen, p.id_categoria, p.cantidad, p.precio, p.activo
 from productos p inner join carrito c on p.id = c.id_producto 
 inner join usuarios u on u.id = 7 where p.activo='true'
+
+
+select*from compras
+select*from productos where id_categoria=8 count=1

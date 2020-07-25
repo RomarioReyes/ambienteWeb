@@ -1,4 +1,16 @@
 <?php
+//funcio que genera codigo de ordenes
+function generateRandomString()
+{
+  $length = 10;
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
+}
 
 // funcion que da conexion a la base de datos
 function getConnection()
@@ -135,8 +147,6 @@ function cargarProducto($id)
 
 
 
-
-
 //funcion que edita los productos los actualiza al estado desactivado
 function editProductos($id, $nombre, $descripcion, $imagen, $id_categoria, $cantidad, $precio)
 {
@@ -171,7 +181,8 @@ function saveCarrito($id_usuario, $id_producto, $fecha)
   return $rs;
 }
 //funcion que carga los productos del usuario en el carrito
-function cargarCarrito($id){
+function cargarCarrito($id)
+{
   $conn = getConnection();
   $sql = "SELECT p.id, p.nombre,p.imagen, p.id_categoria, p.cantidad, p.precio, p.activo, p.descripcion, c.id as id_carrito
   FROM productos p INNER JOIN carrito c ON p.id = c.id_producto 
@@ -179,7 +190,6 @@ function cargarCarrito($id){
   $rs = pg_query($conn, $sql);
   pg_close($conn);
   return $rs;
-
 }
 //funcion que borra productos del carrito
 function deleteElementoCarrito($id)
@@ -189,13 +199,46 @@ function deleteElementoCarrito($id)
   $result = pg_query($conn, $sql);
   pg_close($conn);
   return $result;
-
 }
+//funcion que desactiva productos en carrito
+function updateElementoCarrito($id)
+{
+  $conn = getConnection();
+  $sql = " UPDATE  carrito SET activo='false'  WHERE id ='$id'";
+  $result = pg_query($conn, $sql);
+  pg_close($conn);
+  return $result;
+}
+
 //funcion que hace checkout
-function checkout($id,$id_){
+function checkout($id)
+{
+  $codigo = generateRandomString();
+  $conn = getConnection();
+  $sql = "SELECT p.cantidad,p.id, p.nombre,p.imagen, p.id_categoria, p.cantidad, p.precio, p.activo, p.descripcion ,c.id as id_carrito
+  FROM productos p INNER JOIN carrito c ON p.id = c.id_producto 
+  INNER JOIN usuarios u ON u.id = '$id' WHERE p.activo='true'";
+  $rs = pg_query($conn, $sql);
+  $incoveniente="no falta";
+  if ($rs != false) {
+    while ($fila = pg_fetch_array($rs)) {
+      if($fila["cantidad">0]){
+        updateElementoCarrito($fila["id_carrito"]);
+        pg_query($conn,$sql);
+        $id_p=$fila["id"];
+
+        $sql="Updates productos SET cantidad = cantidad-1 where id='$id_p'";
+
+        $sql="INSERT INTO compras(id_usuario, id_producto, fecha,orden) VALUES ('$id','$id_p',now(),$codigo)";
+      }else{
+        $inconveniente="falta";
+      }
+    }
+  }
 
 
-
+  pg_close($conn);
+  return $inconveniente;
 }
 
 
