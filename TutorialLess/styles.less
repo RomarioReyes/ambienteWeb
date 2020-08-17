@@ -1,0 +1,138 @@
+// Variables
+// Una de las principales características de less es la capacidad de crear las variables 
+// al igual que lo hace un lenguaje de programación estándar. Puedes almacenar cualquier 
+// tipo de valor que uses frecuentemente en tu hoja de estilo: colores, dimensiones, 
+// selectores, nombres de fuentes, direcciones URL y todo lo que se te vaya ocurriendo. 
+// La filosofía de less es reutilizar el código CSS todo lo que sea posible. 
+@background-color: #ffffff;
+@text-color: #1A237E;
+
+p{
+  background-color: @background-color;
+  color: @text-color;
+  padding: 15px;
+}
+
+ul{
+  background-color: @background-color;
+}
+
+li{
+  color: @text-color;
+}
+// Mixins
+// LESS nos permite utilizar una clase existente o un id y aplicar 
+// todos sus estilos directamente a otro selector. 
+#circle{
+    background-color: #4CAF50;
+    border-radius: 100%;
+    text-align: center;
+  }
+  
+  #small-circle{
+    width: 50px;
+    height: 50px;
+    #circle
+  }
+  
+  #big-circle{
+    width: 100px;
+    height: 100px;
+    #circle
+  }
+//   Otra cosa que los mixins pueden hacer es recibir parámetros. 
+//   En el siguiente ejemplo se pasa un argumento para la anchura 
+//   y la altura de nuestros círculos, con un valor por defecto de 25 píxeles. 
+//   Esto creará un pequeño círculo de 25 × 25 y uno grande de 100 × 100 píxeles. 
+#circle-m(@size: 50px){
+    background-color: #4CAF50;
+    border-radius: 100%;
+    text-align: center;
+    width: @size;
+    height: @size;
+  }
+  
+  #small-circle-m{
+    #circle-m
+  }
+  
+  #big-circle-m{
+    #circle-m(100px)
+  }
+// Anidamiento y ámbito
+// El anidamiento se puede utilizar para estructurar una hoja 
+// de estilos de manera que coincida con la estructura HTML de una página web,
+//  al tiempo que reduces el riesgo de conflictos. He aquí un ejemplo de una lista desordenada y sus hijos: 
+#lista-anidada{
+    width: 200px;
+    height: 200px;
+ul{
+    background-color: #03A9F4;
+    padding: 10px;
+    list-style: none;
+  
+    li{
+      background-color: #fff;
+      border-radius: 3px;
+      margin: 10px 0;
+    }
+  }
+}
+// Al igual que en los lenguajes de programación, las variables de less reciben
+// sus valores en función del ámbito de aplicación. Si el valor no está especificado 
+// en el ámbito específico,
+// LESS lo buscará en bloques superiores hasta que encuentre la declaración más cercana.
+// Traducido a CSS, nuestro li tendrá el texto en color blanco, ya que hemos predefinido 
+// el @text-color en las reglas del ul 
+#lista-bloque{
+    @text-color: #000000;
+     width: 200px;
+        height: 200px;
+    ul{
+      @text-color: #fff;
+      background-color: #03A9F4;
+      padding: 10px;
+      list-style: none;
+    
+      li{
+        color: @text-color;
+        border-radius: 3px;
+        margin: 10px 0;
+      }
+    }}
+// Operaciones
+// También puedes hacer operaciones matemáticas básicas 
+// en los valores y colores numéricos. Digamos que queremos 
+// tener dos divs colocados uno junto al otro, siendo el segundo, 
+// el doble de ancho que el primero y con un fondo diferente. 
+@div-width: 100px;
+@color: #03A9F4;
+
+div{
+  height: 50px;
+  display: inline-block;
+}
+
+#left{
+  width: @div-width;
+  background-color: @color - 100;
+}
+
+#right{
+  width: @div-width * 2;
+  background-color: @color;
+}
+// Funciones
+// LESS también cuenta con funciones. Está empezando a parecerse cada 
+// vez más a un lenguaje de programación, ¿verdad? Vamos a echar un vistazo 
+// a fadeout, una función que disminuye la opacidad de un color. 
+@var: #004590;
+div{
+  height: 50px;
+  width: 50px;
+  background-color: @var;
+
+  &:hover{
+    background-color: fadeout(@var, 50%)
+  }
+}
