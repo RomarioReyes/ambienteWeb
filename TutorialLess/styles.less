@@ -3,10 +3,15 @@
 // al igual que lo hace un lenguaje de programación estándar. Puedes almacenar cualquier 
 // tipo de valor que uses frecuentemente en tu hoja de estilo: colores, dimensiones, 
 // selectores, nombres de fuentes, direcciones URL y todo lo que se te vaya ocurriendo. 
-// La filosofía de less es reutilizar el código CSS todo lo que sea posible. 
+// La filosofía de less es reutilizar el código CSS todo lo que sea posible.
+body {
+  display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+}
 @background-color: #ffffff;
 @text-color: #1A237E;
-
 p{
   background-color: @background-color;
   color: @text-color;
@@ -29,13 +34,13 @@ li{
     text-align: center;
   }
   
-  #small-circle{
+#small-circle{
     width: 50px;
     height: 50px;
     #circle
   }
   
-  #big-circle{
+#big-circle{
     width: 100px;
     height: 100px;
     #circle
@@ -44,20 +49,20 @@ li{
 //   En el siguiente ejemplo se pasa un argumento para la anchura 
 //   y la altura de nuestros círculos, con un valor por defecto de 25 píxeles. 
 //   Esto creará un pequeño círculo de 25 × 25 y uno grande de 100 × 100 píxeles. 
-#circle-m(@size: 50px){
-    background-color: #4CAF50;
+#circle-m(@size: 100px){
+    background-color: #173081;
     border-radius: 100%;
     text-align: center;
     width: @size;
     height: @size;
-  }
+}
   
-  #small-circle-m{
+#small-circle-m{
     #circle-m
-  }
+}
   
-  #big-circle-m{
-    #circle-m(100px)
+#big-circle-m{
+    #circle-m(200px)
   }
 // Anidamiento y ámbito
 // El anidamiento se puede utilizar para estructurar una hoja 
@@ -87,7 +92,7 @@ ul{
 #lista-bloque{
     @text-color: #000000;
      width: 200px;
-        height: 200px;
+     height: 200px;
     ul{
       @text-color: #fff;
       background-color: #03A9F4;
@@ -100,7 +105,7 @@ ul{
         margin: 10px 0;
       }
     }}
-// Operaciones
+// Operaciones tales como round, ceil, floor, porcentage
 // También puedes hacer operaciones matemáticas básicas 
 // en los valores y colores numéricos. Digamos que queremos 
 // tener dos divs colocados uno junto al otro, siendo el segundo, 
@@ -109,30 +114,33 @@ ul{
 @color: #03A9F4;
 
 div{
-  height: 50px;
-  display: inline-block;
-}
+   height: 50px;
+   display: inline-block;
+ }
 
 #left{
-  width: @div-width;
-  background-color: @color - 100;
-}
+   width: @div-width;
+   background-color: @color - 100;
+ }
 
 #right{
-  width: @div-width * 2;
-  background-color: @color;
-}
-// Funciones
+   width: @div-width * 2;
+   background-color: @color;
+ }
+
+// Funciones saturate, desaturate, fadein, fadeout, fade, mix
 // LESS también cuenta con funciones. Está empezando a parecerse cada 
 // vez más a un lenguaje de programación, ¿verdad? Vamos a echar un vistazo 
 // a fadeout, una función que disminuye la opacidad de un color. 
-@var: #004590;
-div{
-  height: 50px;
-  width: 50px;
-  background-color: @var;
 
-  &:hover{
-    background-color: fadeout(@var, 50%)
-  }
-}
+
+// @var: #004590;
+// div{
+//    height: 50px;
+//   width: 50px;
+//  background-color: @var;
+
+//  &:hover{
+//    background-color: fadeout(@var, 50%)
+//   }
+//  }
